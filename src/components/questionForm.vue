@@ -4,11 +4,8 @@
     <div class="header">
       <h1 class="title">{{ t.title }}</h1>
       <button @click="toggleLang" class="lang-toggle">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-        </svg>
+        <!-- <img src="@/assets/icon-translate.png" alt="lang-icon" /> -->
+        <img :src="iconTranslate" alt="lang-icon" />
       </button>
     </div>
 
@@ -158,24 +155,57 @@
         </div>
         <van-form ref="form2" @submit="handleNext">
           <div class="form-section">
-            <div class="van-label">{{ t.step3.safety }}</div>
+            <div class="van-label">{{ t.step3.high }}</div>
             <van-field
-              v-model="formData.safety"
+              v-model="formData.high"
               is-link
               readonly
-              name="safety"
-              :placeholder="t.step3.safetyPlaceholder"
-              @click="showMulPicker('safety')"
+              name="high"
+              :placeholder="t.step3.highPlaceholder"
+              @click="showMulPicker('high')"
             />
 
-            <div class="van-label">{{ t.step3.compliance }}</div>
+            <div class="van-label">{{ t.step3.middle }}</div>
             <van-field
-              v-model="formData.compliance"
+              v-model="formData.middle"
               is-link
               readonly
-              name="compliance"
-              :placeholder="t.step3.compliancePlaceholder"
-              @click="showMulPicker('compliance')"
+              name="middle"
+              :placeholder="t.step3.middlePlaceholder"
+              @click="showMulPicker('middle')"
+            />
+
+            <div class="van-label">{{ t.step3.low }}</div>
+            <van-field
+              v-model="formData.low"
+              is-link
+              readonly
+              name="low"
+              :placeholder="t.step3.lowPlaceholder"
+              @click="showMulPicker('low')"
+            />
+
+            <div class="van-label">{{ t.step3.camera }}</div>
+            
+            <van-field
+              v-model="formData.camera"
+              is-link
+              readonly
+              name="camera"
+              :placeholder="t.step3.cameraPlaceholder"
+              @click="showPicker('camera')"
+              :rules="[{ required: true, message: t.validation.required }]"
+            />
+
+            <div class="van-label">{{ t.step3.location }}</div>
+            <van-field
+              v-model="formData.location"
+              is-link
+              readonly
+              name="location"
+              :placeholder="t.step3.locationPlaceholder"
+              @click="showMulPicker('location')"
+              :rules="[{ required: true, message: t.validation.required }]"
             />
 
             <div class="van-label">{{ t.step3.environment }}</div>
@@ -185,84 +215,39 @@
               readonly
               name="environment"
               :placeholder="t.step3.environmentPlaceholder"
-              @click="showMulPicker('environment')"
-            />
-
-            <!-- 摄像头部署要求 -->
-            <p class="section-subtitle">{{ t.step3.camera.title }}</p>
-            
-            <van-field
-              v-model="formData.cameraNeeds"
-              is-link
-              readonly
-              name="cameraNeeds"
-              :label="t.step3.camera.count"
-              :placeholder="t.step3.camera.countPlaceholder"
+              @click="showPicker('environment')"
               :rules="[{ required: true, message: t.validation.required }]"
-              @click="showPicker('cameraNeeds')"
             />
 
-            <div class="checkbox-section">
-              <p class="field-label">{{ t.step3.camera.location }}</p>
-              <van-checkbox-group v-model="formData.cameraLocations">
-                <van-checkbox
-                  v-for="(option, idx) in t.step3.camera.locationOptions"
-                  :key="idx"
-                  :name="option"
-                  shape="square"
-                >
-                  {{ option }}
-                </van-checkbox>
-              </van-checkbox-group>
-            </div>
-
-            <div class="checkbox-section">
-              <p class="field-label">{{ t.step3.camera.environment }}</p>
-              <van-checkbox-group v-model="formData.cameraEnvironments">
-                <van-checkbox
-                  v-for="(option, idx) in t.step3.camera.environmentOptions"
-                  :key="idx"
-                  :name="option"
-                  shape="square"
-                >
-                  {{ option }}
-                </van-checkbox>
-              </van-checkbox-group>
-            </div>
-
-            <!-- 系统集成需求 -->
-            <p class="section-subtitle">{{ t.step3.integration.title }}</p>
-            
-            <div class="checkbox-section">
-              <p class="field-label">{{ t.step3.integration.system }}</p>
-              <van-checkbox-group v-model="formData.integrationSystems">
-                <van-checkbox
-                  v-for="(option, idx) in t.step3.integration.systemOptions"
-                  :key="idx"
-                  :name="option"
-                  shape="square"
-                >
-                  {{ option }}
-                </van-checkbox>
-              </van-checkbox-group>
-            </div>
-
+            <div class="van-label">{{ t.step3.integration }}</div>
             <van-field
-              v-model="formData.mobileAccess"
+              v-model="formData.integration"
               is-link
               readonly
-              name="mobileAccess"
-              :label="t.step3.integration.mobile"
-              :placeholder="t.step3.integration.mobilePlaceholder"
-              @click="showPicker('mobileAccess')"
+              name="integration"
+              :placeholder="t.step3.integrationPlaceholder"
+              @click="showPicker('integration')"
+              :rules="[{ required: true, message: t.validation.required }]"
             />
 
+            <div class="van-label">{{ t.step3.mobile }}</div>
             <van-field
-              v-if="formData.mobileAccess && formData.mobileAccess.includes(lang === 'zh' ? '是' : 'Yes')"
-              v-model="formData.mobilePlatform"
-              name="mobilePlatform"
-              :label="t.step3.integration.platform"
-              :placeholder="t.step3.integration.platformPlaceholder"
+              v-model="formData.mobile"
+              is-link
+              readonly
+              name="mobile"
+              :placeholder="t.step3.mobilePlaceholder"
+              @click="showPicker('mobile')"
+              :rules="[{ required: true, message: t.validation.required }]"
+            />
+
+            <div class="van-label" v-if="formData.mobile && formData.mobile.includes(lang === 'zh' ? '是' : 'Yes')">{{ t.step3.platform }}</div>
+            <van-field
+              v-if="formData.mobile && formData.mobile.includes(lang === 'zh' ? '是' : 'Yes')"
+              v-model="formData.platform"
+              name="platform"
+              :placeholder="t.step3.platformPlaceholder"
+              :rules="[{ required: true, message: t.validation.required }]"
             />
           </div>
 
@@ -280,58 +265,59 @@
           <p class="welcome-text">{{ t.welcome.desc4 }}</p>
         </div>
         <van-form ref="form3" @submit="handleComplete">
-          <div class="section-header">
-            <h3 class="section-title">{{ t.step4.title }}</h3>
-          </div>
-
           <div class="form-section">
+            <div class="van-label">{{ t.step4.budget }}</div>
             <van-field
               v-model="formData.budget"
               is-link
               readonly
               name="budget"
-              :label="t.step4.budget"
               :placeholder="t.step4.budgetPlaceholder"
               :rules="[{ required: true, message: t.validation.required }]"
               @click="showPicker('budget')"
             />
+
+            <div class="van-label">{{ t.step4.startTime }}</div>
 
             <van-field
               v-model="formData.startTime"
               is-link
               readonly
               name="startTime"
-              :label="t.step4.startTime"
               :placeholder="t.step4.startTimePlaceholder"
               :rules="[{ required: true, message: t.validation.required }]"
               @click="showPicker('startTime')"
             />
+
+            <div class="van-label">{{ t.step4.training }}</div>
 
             <van-field
               v-model="formData.needTraining"
               is-link
               readonly
               name="needTraining"
-              :label="t.step4.training"
               :placeholder="t.step4.trainingPlaceholder"
+              :rules="[{ required: true, message: t.validation.required }]"
               @click="showPicker('needTraining')"
             />
+
+            <div class="van-label" v-if="formData.needTraining && formData.needTraining.includes(lang === 'zh' ? '是' : 'Yes')">{{ t.step4.trainingCount }}</div>
 
             <van-field
               v-if="formData.needTraining && formData.needTraining.includes(lang === 'zh' ? '是' : 'Yes')"
               v-model="formData.trainingCount"
               name="trainingCount"
               type="number"
-              :label="t.step4.trainingCount"
+              :rules="[{ required: true, message: t.validation.required }]"
               :placeholder="t.step4.trainingCountPlaceholder"
             />
+            <div class="van-label">{{ t.step4.otherNeeds }}</div>
 
             <van-field
               v-model="formData.otherNeeds"
               rows="3"
               autosize
               type="textarea"
-              :label="t.step4.otherNeeds"
               :placeholder="t.step4.otherNeedsPlaceholder"
             />
           </div>
@@ -355,6 +341,29 @@
       />
     </van-popup>
 
+    <van-popup v-if="showMulPickerPopup" v-model:show="showMulPickerPopup" position="bottom" style="height: 300px;">
+      <van-checkbox-group v-if="currentMulPickerField == 'high'" style="padding: 10px" v-model="highGroup" @change="onHighChange">
+          <van-checkbox shape="square" style="margin: 20px 5px;font-size: 14px;" v-for="(item,index) in mulPickerColumns" :key="index" :name="item">
+            {{item}}
+          </van-checkbox>
+        </van-checkbox-group>
+      <van-checkbox-group v-if="currentMulPickerField == 'middle'" style="padding: 10px" v-model="middleGroup" @change="onMiddleChange">
+          <van-checkbox shape="square" style="margin: 20px 5px;font-size: 14px;" v-for="(item,index) in mulPickerColumns" :key="index" :name="item">
+            {{item}}
+          </van-checkbox>
+        </van-checkbox-group>
+      <van-checkbox-group v-if="currentMulPickerField == 'low'" style="padding: 10px" v-model="lowGroup" @change="onLowChange">
+          <van-checkbox shape="square" style="margin: 20px 5px;font-size: 14px;" v-for="(item,index) in mulPickerColumns" :key="index" :name="item">
+            {{item}}
+          </van-checkbox>
+        </van-checkbox-group>
+      <van-checkbox-group v-if="currentMulPickerField == 'location'" style="padding: 10px" v-model="locationGroup" @change="onLocationChange">
+          <van-checkbox shape="square" style="margin: 20px 5px;font-size: 14px;" v-for="(item,index) in mulPickerColumns" :key="index" :name="item">
+            {{item}}
+          </van-checkbox>
+        </van-checkbox-group>
+    </van-popup>
+
     <!-- Date Picker Popup -->
     <van-popup v-if="showDatePickerPopup" v-model:show="showDatePickerPopup" position="bottom">
       <van-date-picker
@@ -369,8 +378,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { Toast } from 'vant';
+import axios from 'axios';
+import { ref, reactive, computed, onMounted } from 'vue';
+import { showToast } from 'vant';
+import iconTranslate from '@/assets/img/icon-translate.png';
+import dayjs from 'dayjs';
 
 const translations = {
   zh: {
@@ -410,22 +422,19 @@ const translations = {
       keepDevice: '是否需要保留现有设备',
       keepDevicePlaceholder: '请选择',
       keepDeviceOptions: ['全部保留', '部分保留', '完全替换'],
-      keepDeviceNote: '部分保留说明',
-      keepDeviceNotePlaceholder: '请说明需要保留的设备'
     },
     step3: {
-      title: 'AI视觉监控功能需求',
-      safety: '1',
-      safetyPlaceholder: '请选择',
-      safetyOptions:[
+      high: '高优先级核心AI算法功能（可多选）',
+      highPlaceholder: '请选择',
+      highOptions:[
         '周界入侵检测（围墙/禁区闯入）',
         '人员聚集预警（车间/通道拥堵）',
         '危险行为识别（攀爬/摔倒/奔跑）',
         '物料堆放合规检测（高度/倾斜/宽度）',
       ],
-      compliance: '1',
-      compliancePlaceholder: '请选择',
-      complianceOptions: [
+      middle: '中等优先级核心AI算法功能（可多选）',
+      middlePlaceholder: '请选择',
+      middleOptions: [
         '安全帽/反光衣佩戴检测',
         '吸烟/打电话等违规行为识别',
         '设备状态监测（异常停机/异响）',
@@ -436,32 +445,30 @@ const translations = {
         '托盘/物料自动计数',
         '叉车/牵引车运行轨迹合规',
       ],
-      environment: '1',
-      environmentPlaceholder: '请选择',
-      environmentOptions: [
+      low: '低优先级核心AI算法功能（可多选）',
+      lowPlaceholder: '请选择',
+      lowOptions: [
         '烟火识别（火焰/烟雾实时报警）',
         '温湿度/粉尘浓度超标预警',
       ],
-      camera: {
-        title: '摄像头部署要求',
-        count: '预计摄像头数量',
-        countPlaceholder: '请选择',
-        countOptions: ['<20路', '21-60路', '61-100路', '>100路'],
-        location: '安装位置（可多选）',
-        locationOptions: ['厂区周界', '生产车间', '仓储区域', '办公区域', '出入口', '其他'],
-        environment: '环境适应性需求（可多选）',
-        environmentOptions: ['室外防水防尘（IP66+）', '夜视功能（红外/星光级）', '防爆防腐', '高温/低温环境', '其他']
-      },
-      integration: {
-        title: '系统集成需求',
-        system: '是否需要与现有系统集成（可多选）',
-        systemOptions: ['门禁系统', '消防系统', 'ERP/MES系统', '无', '其他'],
-        mobile: '是否需要移动端访问',
-        mobilePlaceholder: '请选择',
-        mobileOptions: ['是', '否'],
-        platform: '需支持平台',
-        platformPlaceholder: '如：iOS、Android、微信小程序等'
-      }
+      camera: '预计摄像头数量',
+      cameraPlaceholder: '请选择',
+      cameraOptions: ['<20路', '21-60路', '61-100路', '>100路'],
+      location: '安装位置（可多选）',
+      locationPlaceholder: '请选择',
+      locationOptions: ['厂区周界', '生产车间', '仓储区域', '办公区域', '出入口', '其他'],
+      environment: '环境适应性需求',
+      environmentPlaceholder: '环境适应性需求',
+      environmentOptions: ['室外防水防尘（IP66+）', '夜视功能（红外/星光级）', '防爆防腐', '高温/低温环境', '其他'],
+      integration: '是否需要与现有系统集成',
+      integrationPlaceholder: '请选择',
+      integrationOptions: ['门禁系统', '消防系统', 'ERP/MES系统', '无', '其他'],
+      mobile: '是否需要移动端访问',
+      mobilePlaceholder: '请选择',
+      mobileOptions: ['是', '否'],
+      platform: '需支持平台',
+      platformPlaceholder: '如：iOS、Android、微信小程序等'
+      
     },
     step4: {
       title: '项目预算与时间规划',
@@ -492,9 +499,9 @@ const translations = {
     },
     welcome: {
       desc1: 'Hello! To assist your company in preliminary evaluation of AI vision monitoring system deployment plan and budget, we have designed the following questionnaire. Please fill in according to actual needs so that we can provide accurate preliminary quotation suggestions. We will arrange technical team on-site survey later to further refine the plan. Thank you for your support!',
-      desc2: 'Hello! To assist your company in preliminary evaluation of AI vision monitoring system deployment plan and budget, we have designed the following questionnaire. Please fill in according to actual needs so that we can provide accurate preliminary quotation suggestions. We will arrange technical team on-site survey later to further refine the plan. Thank you for your support!',
-      desc3: 'Hello! To assist your company in preliminary evaluation of AI vision monitoring system deployment plan and budget, we have designed the following questionnaire. Please fill in according to actual needs so that we can provide accurate preliminary quotation suggestions. We will arrange technical team on-site survey later to further refine the plan. Thank you for your support!',
-      desc4: 'Hello! To assist your company in preliminary evaluation of AI vision monitoring system deployment plan and budget, we have designed the following questionnaire. Please fill in according to actual needs so that we can provide accurate preliminary quotation suggestions. We will arrange technical team on-site survey later to further refine the plan. Thank you for your support!'
+      desc2: 'Current monitoring system status (skip if none)',
+      desc3: 'AI visual monitoring functional requirements (multiple selections allowed)',
+      desc4: 'Project budget and timeline, other supplementary notes'
     },
     step1: {
       companyName: 'Company Name',
@@ -521,57 +528,52 @@ const translations = {
       keepDevice: 'Keep existing equipment',
       keepDevicePlaceholder: 'Please select',
       keepDeviceOptions: ['Keep all', 'Partial keep', 'Complete replacement'],
-      keepDeviceNote: 'Partial keep note',
-      keepDeviceNotePlaceholder: 'Please specify devices to keep'
     },
     step3: {
-      safety: 'Safety Protection',
-      safetyPlaceholder: 'Please select',
-      safetyOptions: [
-        'Perimeter intrusion detection',
-        'Crowd gathering warning',
-        'Dangerous behavior recognition',
-        'Material stacking compliance' 
-      ],
-      compliance: '1',
-      compliancePlaceholder: 'Please select',
-      complianceOptions: [
-        'Safety helmet/vest detection',
-        'Smoking/phone call violation',
-        'Equipment status monitoring',
-        'Material misplacement recognition',
-        'Tool/equipment position monitoring',
-        'Production process compliance',
-        'Unauthorized entry detection',
-        'Pallet/material auto counting',
-        'Forklift trajectory compliance'
-      ],
-      environment: '1',
-      environmentPlaceholder: 'Please select',
-      environmentOptions: [
-        'Fire/smoke detection',
-        'Temperature/humidity/dust alert'
-      ],
-      camera: {
-        title: 'Camera Deployment Requirements',
-        count: 'Expected number of cameras',
-        countPlaceholder: 'Please select',
-        countOptions: ['<20', '21-60', '61-100', '>100'],
-        location: 'Installation location (multiple)',
-        locationOptions: ['Perimeter', 'Workshop', 'Warehouse', 'Office', 'Entrance', 'Other'],
-        environment: 'Environment adaptability (multiple)',
-        environmentOptions: ['Outdoor waterproof (IP66+)', 'Night vision (IR/Starlight)', 'Explosion-proof', 'High/Low temperature', 'Other']
-      },
-      integration: {
-        title: 'System Integration',
-        system: 'Integration with existing systems (multiple)',
-        systemOptions: ['Access control', 'Fire alarm', 'ERP/MES', 'None', 'Other'],
-        mobile: 'Mobile access needed',
-        mobilePlaceholder: 'Please select',
-        mobileOptions: ['Yes', 'No'],
-        platform: 'Platform support',
-        platformPlaceholder: 'e.g., iOS, Android, WeChat mini program'
-      }
+     high: 'High-priority core AI algorithm functions (multiple selections allowed)',
+     highPlaceholder: 'Please select',
+     highOptions:[
+       'Perimeter intrusion detection (wall/restricted area breaches)',
+       'Crowd gathering alerts (workshop/passage congestion)',
+       'Hazardous behavior recognition (climbing/fall/running)',
+       'Material stacking compliance check (height/tilt/width)',
+     ],
+     middle: 'Medium-priority core AI algorithm functions (multiple selections allowed)',
+     middlePlaceholder: 'Please select',
+     middleOptions: [
+       'Helmet/reflection vest wearing detection',
+       'Violation behavior recognition (smoking/using phone, etc.)',
+       'Equipment status monitoring (unexpected shutdown/abnormal noise)',
+       'Material misplacement/mixing detection (wrong area/shelf)',
+       'Tool/workstation presence monitoring (specified area)',
+       'Production process compliance (missing steps/incorrect operation sequence)',
+       'Unauthorized entry by outsiders/vehicles',
+       'Automatic pallet/material counting',
+       'Forklift/trailer movement compliance',
+     ],
+     low: 'Low-priority core AI algorithm functions (multiple selections allowed)',
+     lowPlaceholder: 'Please select',
+     lowOptions: [
+       'Fire/smoke detection (real-time alarm)',
+       'Temperature/humidity or dust concentration alert',
+     ],
+     camera: 'Estimated number of cameras',
+     cameraPlaceholder: 'Please select',
+     cameraOptions: ['<20 channels', '21-60 channels', '61-100 channels', '>100 channels'],
+     location: 'Installation locations (multiple selections allowed)',
+     locationPlaceholder: 'Please select',
+     locationOptions: ['Perimeter', 'Production workshop', 'Storage area', 'Office area', 'Entrance/Exit', 'Other'],
+     environment: 'Environmental adaptability requirements',
+     environmentPlaceholder: 'Environmental adaptability requirements',
+     environmentOptions: ['Outdoor waterproof/dustproof (IP66+)', 'Night vision (infrared/starlight)', 'Explosion-proof/corrosion-proof', 'High/low temperature environment', 'Other'],
+     integration: 'Need to integrate with existing systems?',
+     integrationPlaceholder: 'Please select',
+     integrationOptions: ['Access control system', 'Fire system', 'ERP/MES system', 'None', 'Other'],
+     mobile: 'Require mobile access?',
+     mobilePlaceholder: 'Please select',
+     mobileOptions: ['Yes', 'No'],
+     platform: 'Supported platforms',
+     platformPlaceholder: 'e.g., iOS, Android, WeChat Mini Program'
     },
     step4: {
       title: 'Budget & Planning',
@@ -596,14 +598,14 @@ const translations = {
   }
 };
 
-const lang = ref('zh');
+const lang = ref('en');
 const step = ref(0);
 const form0 = ref(null);
 const form1 = ref(null);
 const form2 = ref(null);
 const form3 = ref(null);
 
-const formData = ref({
+const formData = reactive({
   companyName: '',
   industry: '',
   area: '',
@@ -613,22 +615,26 @@ const formData = ref({
   cameraCount: '',
   deployTime: '',
   keepDevice: '',
-  keepDeviceNote: '',
-  safetyFeatures: [],
-  complianceFeatures: [],
-  environmentFeatures: [],
-  cameraNeeds: '',
-  cameraLocations: [],
-  cameraEnvironments: [],
-  integrationSystems: [],
-  mobileAccess: '',
-  mobilePlatform: '',
+  high: [],
+  middle: [],
+  low: [],
+  camera: '',
+  location: [],
+  environment: '',
+  integration: '',
+  mobile: '',
+  platform: '',
   budget: '',
   startTime: '',
   needTraining: '',
   trainingCount: '',
   otherNeeds: ''
 });
+
+const highGroup = ref([]);
+const middleGroup = ref([]);
+const lowGroup = ref([]);
+const locationGroup = ref([]);
 
 // Picker
 const showPickerPopup = ref(false);
@@ -640,7 +646,9 @@ const currentMulPickerField = ref('');
 
 // Date Picker
 const showDatePickerPopup = ref(false);
-const currentDate = ref(['2025', '01', '01']);
+const today = dayjs().format('YYYY-MM-DD')
+const currentDate = ref(today.split('-'));
+
 const minDate = new Date(2020, 0, 1);
 const maxDate = new Date(2030, 11, 31);
 
@@ -669,8 +677,10 @@ const showPicker = (field) => {
     employeeCount: t.value.step1.employeeCountOptions,
     hasSystem: t.value.step2.hasSystemOptions,
     keepDevice: t.value.step2.keepDeviceOptions,
-    cameraNeeds: t.value.step3.camera.countOptions,
-    mobileAccess: t.value.step3.integration.mobileOptions,
+    camera: t.value.step3.cameraOptions,
+    environment: t.value.step3.environmentOptions,
+    integration: t.value.step3.integrationOptions,
+    mobile: t.value.step3.mobileOptions,
     budget: t.value.step4.budgetOptions,
     startTime: t.value.step4.startTimeOptions,
     needTraining: t.value.step4.trainingOptions
@@ -685,30 +695,52 @@ const showPicker = (field) => {
 };
 
 const showMulPicker = (field) => {
+  console.log('field',field);
   currentMulPickerField.value = field;
   
   const optionsMap = {
-    cameraNeeds: t.value.step3.camera.countOptions,
-    mobileAccess: t.value.step3.integration.mobileOptions,
+    high: t.value.step3.highOptions,
+    middle: t.value.step3.middleOptions,
+    low: t.value.step3.lowOptions,
+    location: t.value.step3.locationOptions,
   };
   
   const options = optionsMap[field];
-  pickerMulColumns.value = options.map(option => {
-    return { text: option, value: option }
-  }) || [];
+  // showMulPickerPopup.value = options.map(option => {
+  //   return { text: option, value: option }
+  // }) || [];
+  mulPickerColumns.value = options || []
   console.log(field,pickerColumns.value);
   showMulPickerPopup.value = true;
 };
 
+const onHighChange = (names) => {
+  formData.high = highGroup.value
+};
+const onMiddleChange = (names) => {
+  formData.middle = middleGroup.value
+};
+const onLowChange = (names) => {
+  formData.low = lowGroup.value
+};
+const onLocationChange = (names) => {
+  formData.location = locationGroup.value
+};
 const onPickerConfirm = (selectedValues) => {
   console.log('selectedValues', selectedValues);
-  formData.value[currentPickerField.value] = selectedValues.selectedValues[0];
+  if (currentPickerField.value === 'hasSystem'&&(selectedValues.selectedValues[0] == '否' || selectedValues.selectedValues[0] == 'No')) {
+    formData.systemBrand = '';
+    formData.cameraCount = '';
+    formData.deployTime = '';
+    formData.keepDevice = '';
+  }
+  formData[currentPickerField.value] = selectedValues.selectedValues[0];
   showPickerPopup.value = false;
 };
 
 const showDatePicker = () => {
-  if (formData.value.deployTime) {
-    const date = new Date(formData.value.deployTime);
+  if (formData.deployTime) {
+    const date = new Date(formData.deployTime);
     currentDate.value = [
       date.getFullYear().toString(),
       (date.getMonth() + 1).toString().padStart(2, '0'),
@@ -719,7 +751,7 @@ const showDatePicker = () => {
 };
 
 const onDateConfirm = ({ selectedValues }) => {
-  formData.value.deployTime = `${selectedValues[0]}-${selectedValues[1]}-${selectedValues[2]}`;
+  formData.deployTime = `${selectedValues[0]}-${selectedValues[1]}-${selectedValues[2]}`;
   showDatePickerPopup.value = false;
 };
 
@@ -742,54 +774,76 @@ const handleNext = async () => {
   }
 };
 
+
+const submitData = async (formObj) => {
+  try {
+    const payload = {
+      data: formObj  // key 为 data，对应值是你的对象
+    };
+
+    const res = await axios.post('/api/v1/submit', payload, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('提交成功:', res.data);
+    showToast({message: '提交成功'})
+    return res.data;
+  } catch (err) {
+    console.error('提交失败:', err);
+  }
+};
+
 const handleComplete = async () => {
   try {
     await form3.value.validate();
     
     const dataToSave = {
-      ...formData.value,
+      ...formData,
       timestamp: new Date().toISOString(),
-      language: lang.value
     };
 
-    const existingData = localStorage.getItem('questionnaire_data');
-    const dataArray = existingData ? JSON.parse(existingData) : [];
-    dataArray.push(dataToSave);
-    localStorage.setItem('questionnaire_data', JSON.stringify(dataArray));
-    
-    const jsonContent = JSON.stringify(dataArray, null, 2);
-    const blob = new Blob([jsonContent], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'questions.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    showToast({
-      message: lang.value === 'zh' ? '问卷已提交并下载！' : 'Questionnaire submitted and downloaded!',
-      position: 'top'
-    });
+    submitData(dataToSave)
+    console.log('Data to save:', dataToSave);
     
     // 重置表单
-    formData.value = {
-      companyName: '', industry: '', area: '', employeeCount: '',
-      hasSystem: '', systemBrand: '', cameraCount: '', deployTime: '',
-      keepDevice: '', keepDeviceNote: '',
-      safetyFeatures: [], complianceFeatures: [], environmentFeatures: [],
-      cameraNeeds: '', cameraLocations: [],
-      cameraEnvironments: [], integrationSystems: [], mobileAccess: '',
-      mobilePlatform: '', budget: '', startTime: '', needTraining: '',
-      trainingCount: '', otherNeeds: ''
-    };
+    formData.companyName = '';
+    formData.industry = '';
+    formData.area = '';
+    formData.employeeCount = '';
+    formData.hasSystem = '';
+    formData.systemBrand = '';
+    formData.cameraCount = '';
+    formData.deployTime = '';
+    formData.keepDevice = '';
+    formData.high = [];
+    formData.middle = [];
+    formData.low = [];
+    formData.camera = '';
+    formData.location = [];
+    formData.environment = '';
+    formData.integration = '';
+    formData.mobile = '';
+    formData.platform = '';
+    formData.budget = '';
+    formData.startTime = '';
+    formData.needTraining = '';
+    formData.trainingCount = '';
+    formData.otherNeeds = '';
+
+    highGroup.value = [];
+    middleGroup.value = [];
+    lowGroup.value = [];
+    locationGroup.value = [];
+
     step.value = 0;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (error) {
     console.log('Validation failed:', error);
   }
 };
+
 </script>
 
 <style scoped lang="scss">
@@ -829,7 +883,7 @@ const handleComplete = async () => {
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.2);
+  background: transparent;
   border: none;
   border-radius: 6px;
   padding: 6px;
@@ -838,12 +892,12 @@ const handleComplete = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  // transition: background 0.2s;
 }
 
-.lang-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
+// .lang-toggle:acitve {
+//   background: rgba(255, 255, 255, 0.3);
+// }
 
 /* Tabs */
 .tabs-container {
@@ -985,11 +1039,6 @@ const handleComplete = async () => {
   align-items: flex-start;
 }
 
-:deep(.van-checkbox__label) {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #323233;
-}
 
 :deep(.van-button--primary) {
   background: #5b7fc7;
@@ -1012,5 +1061,12 @@ const handleComplete = async () => {
 
 :deep(.van-popup) {
   border-radius: 16px 16px 0 0;
+}
+
+:deep(.van-checkbox__label) {
+  font-size: 16px;
+  text-align: center;
+  color: #323233;
+  width: 100%;
 }
 </style>
