@@ -577,7 +577,7 @@ const translations = {
     },
     step4: {
       title: 'Budget & Planning',
-      budget: 'Budget range (10k CNY)',
+      budget: 'Budget range (10k RM)',
       budgetPlaceholder: 'Please select',
       budgetOptions: ['<20', '21-50', '51-80', '81-100', '>100', 'Uncertain'],
       startTime: 'Expected start time',
